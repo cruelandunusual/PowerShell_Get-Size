@@ -1,5 +1,6 @@
 <#
 To do list in PowerShell
+This is very much a work in progress
 #>
 class ToDoListItem {
     # Class properties

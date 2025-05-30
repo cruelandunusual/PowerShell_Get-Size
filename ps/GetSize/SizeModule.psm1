@@ -22,10 +22,7 @@ function Get-Size {
         if (!$SortProperty) {
             $SortProperty = 'Size'
         }
-        # elseif ($SortProperty -eq 'Name') {
-        #     $SortProperty = 'Name'
-        #     <# Action when this condition is true #>
-        # }
+
     }
 
     Process {

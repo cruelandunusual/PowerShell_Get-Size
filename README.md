@@ -7,7 +7,7 @@ quite useless at a glance, and in any case it only shows the length property for
 
 ![Get-ChildItem output](https://github.com/user-attachments/assets/01b0e1f2-3c03-4d3b-8301-1f4203bdd526)
 
-Get-Size gets the size of files AND folders;  
+Get-Size gets the size of files AND folders, in an instantly understandable format;  
 
 ![Get-Size output](https://github.com/user-attachments/assets/45a5def4-015f-4646-bdaf-6a4082ca3ae5)
 

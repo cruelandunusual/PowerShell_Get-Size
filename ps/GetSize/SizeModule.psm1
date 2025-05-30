@@ -22,7 +22,6 @@ function Get-Size {
         if (!$SortProperty) {
             $SortProperty = 'Size'
         }
-
     }
 
     Process {

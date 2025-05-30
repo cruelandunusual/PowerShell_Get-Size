@@ -12,13 +12,15 @@ function Get-Size {
             #Mandatory = $true, 
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true)]
-        #[ValidateNotNullOrEmpty()] # Ensure the array isn't null or empty
         [array]$List,
         [string]$SortProperty,
         [switch]$Descending,
         [switch]$Ascending
     )
     Begin {
+        if (!$List) {
+            $List = '*'
+        }
         if (!$SortProperty) {
             $SortProperty = 'Size'
         }

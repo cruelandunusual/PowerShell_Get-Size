@@ -8,7 +8,13 @@ quite useless at a glance, and in any case it only shows the length property for
 ![Get-ChildItem output](https://github.com/user-attachments/assets/01b0e1f2-3c03-4d3b-8301-1f4203bdd526)
 
 
-Get-Size gets the size of a file or folder;  
+Get-Size gets the size of files AND folders;  
+
+![Get-Size output](https://github.com/user-attachments/assets/45a5def4-015f-4646-bdaf-6a4082ca3ae5)
+
+It respects the colour coding of files and folders, although shows the item type in the leftmost column  
+in case the user's terminal colour settings don't differentiate between files and folders.  
+
 You can pass multiple items in a comma separated list of symbols, e.g.  
 "Get-Size D:\Audio, $HOME\Documents, myfile.txt"  
 including variables storing a list of items, e.g.  
@@ -16,15 +22,15 @@ including variables storing a list of items, e.g.
 
 The modifiable options are -SortProperty and -Descending/-Ascending.  
 -Descending and -Ascending are simple switches; -SortProperty expects either Name or Size.  
-By default it sorts by Size in -Ascending order, so you can leave out the -Ascending switch. e.g.  
-"Get-Size -SortProperty Name -Descending"  
+By default it sorts by Size in -Ascending order, so you can leave out the -Ascending switch.  
 The switches can be given in any order, e.g.  
-"Get-Size -Ascending -SortProperty Name"  
-Leaving out any filenames, variables or wildcards will default to showing the content of the current directory, the same way Get-ChildItem works.  
-
-![Get-Size output](https://github.com/user-attachments/assets/45a5def4-015f-4646-bdaf-6a4082ca3ae5)
-
-It respects the colour coding of files and folders, although shows the item type in the leftmost column  
-in case the user's terminal colour settings don't differentiate between files and folders.  
+"Get-Size -Descending -SortProperty Name", "Get-Size -SortProperty Name -Descending"  
+Leaving out any filenames, variables or wildcards will default to showing the content of the current directory,  
+the same way Get-ChildItem works.  
+The following will all do the same thing:  
+"Get-Size"  
+"Get-Size -Ascending"  
+"Get-Size -Ascending SortProperty Size"  
+"Get-Size -Ascending SortProperty Size *"  
 
 The repository also contains my WIP PowerShell ToDoList app.

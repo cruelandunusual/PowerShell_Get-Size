@@ -3,7 +3,7 @@ which shows a more human readable size value when listing files and directories,
 by the bash switch -h when using the ls command.
 
 It bothers me that PowerShell shows filenames in byte legths,
-quite useless at a glance, and in any case it only shows the length property for folders.
+quite useless at a glance, and in any case it only shows the length property for files.
 
 ![Get-ChildItem output](https://github.com/user-attachments/assets/01b0e1f2-3c03-4d3b-8301-1f4203bdd526)
 

@@ -21,7 +21,7 @@ including variables storing a list of items, e.g.
 
 The modifiable options are -SortProperty and -Descending/-Ascending.  
 -Descending and -Ascending are simple switches; -SortProperty expects either Name or Size.  
-By default it sorts by Size in -Ascending order, so you can leave out the -Ascending switch.  
+By default it sorts by Size in ascending order, so you can leave out the -Ascending switch.  
 The switches can be given in any order, e.g.  
 "Get-Size -Descending -SortProperty Name", "Get-Size -SortProperty Name -Descending"  
 Leaving out any filenames, variables or wildcards will default to showing the content of the current directory,  

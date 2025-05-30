@@ -16,6 +16,11 @@ e.g. Get-Size D:\Audio, $HOME\Documents, myfile.txt
 
 including variables storing a list of items, e.g. Get-Size $mylist
 
+The modifiable options are -SortProperty and -Descending/-Ascending. 
+By default it sorts by Size in -Ascending order but you can specify -Descending. Also, you can sort by Name instead of Size,
+e.g. Get-Size -SortProperty Name -Descending
+
+
 ![Get-Size output](https://github.com/user-attachments/assets/45a5def4-015f-4646-bdaf-6a4082ca3ae5)
 
 It respects the colour coding of files and folders, although shows the item type in the left most column in case the user's terminal colour settings don't differentiate between files and folders.

@@ -2,7 +2,7 @@ This is my collection of PowerShell scripts, including my Get-Size module,
 which shows a more human readable size value when listing files and directories,  
 inspired by the -h switch when using the BASH ls command.  
 
-It bothers me that PowerShell shows filenames in byte legths,  
+It bothers me that Get-ChildItem shows filenames in byte legths,  
 quite useless at a glance, and in any case it only shows the length property for files.  
 
 ![Get-ChildItem output](https://github.com/user-attachments/assets/01b0e1f2-3c03-4d3b-8301-1f4203bdd526)

@@ -16,8 +16,10 @@ e.g. Get-Size D:\Audio, $HOME\Documents, myfile.txt
 
 including variables storing a list of items, e.g. Get-Size $mylist
 
-The modifiable options are -SortProperty and -Descending/-Ascending. 
-By default it sorts by Size in -Ascending order but you can specify -Descending. Also, you can sort by Name instead of Size,
+The modifiable options are -SortProperty and -Descending/-Ascending. -Descending and -Ascending are simple switches; -SortProperty expects either Name or Size.
+
+By default it sorts by Size in -Ascending order (so you can leave out the -Ascending switch) but you can specify -Descending.
+Also, you can sort by Name instead of Size,
 e.g. Get-Size -SortProperty Name -Descending
 
 

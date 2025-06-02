@@ -23,12 +23,12 @@ as well as combinations of the two:
 Get-Size $mylist, D:\Documents
 ```
 The modifiable options are `-SortProperty` and `-Descending` / `-Ascending`.  
-`-Descending` and `-Ascending` are simple switches;  
-*(by default `Get-Size` sorts its results by size in ascending order, so you can leave out `-Ascending`.)*  
+`-Descending` and `-Ascending` are simple switches.  
+*(By default `Get-Size` sorts its results by size in ascending order, so you can leave out `-Ascending`.)*  
 
 `-SortProperty` expects either `Name` or `Size`.  
 
- The switches can be given in any order, e.g.  
+The switches can be given in any order, e.g.  
 ```
 Get-Size -Descending -SortProperty Name
 ```

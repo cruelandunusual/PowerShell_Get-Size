@@ -1,10 +1,10 @@
 This is my collection of PowerShell scripts, including my `Get-Size` module, which shows a more human readable size value when listing files and directories, inspired by the `-h` switch when using the BASH `ls` command.  
 
-It bothers me that `Get-ChildItem` shows filenames in byte lengths, quite useless at a glance, and in any case it only shows the `Length` property for files.  
+It's not very useful that `Get-ChildItem` shows filenames in bytes, difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
 
 ![Get-ChildItem output](https://github.com/user-attachments/assets/01b0e1f2-3c03-4d3b-8301-1f4203bdd526)
 
-`Get-Size` gets the size of files __*and*__ folders, in an instantly understandable format;  
+`Get-Size` gets the size of files __*and*__ folders, in an instantly understandable format, e.g.:  
 
 ![Get-Size output](https://github.com/user-attachments/assets/45a5def4-015f-4646-bdaf-6a4082ca3ae5)
 
@@ -24,8 +24,11 @@ Get-Size $mylist, D:\Documents
 ```
 The modifiable options are `-SortProperty` and `-Descending` / `-Ascending`.  
 `-Descending` and `-Ascending` are simple switches;  
+*(by default `Get-Size` sorts its results by size in ascending order, so you can leave out `-Ascending`.)*  
+
 `-SortProperty` expects either `Name` or `Size`.  
-By default `Get-Size` sorts its results by size in ascending order, so you can leave out the `-Ascending` switch. The switches can be given in any order, e.g.  
+
+ The switches can be given in any order, e.g.  
 ```
 Get-Size -Descending -SortProperty Name
 ```
@@ -45,5 +48,11 @@ Get-Size -Ascending -SortProperty Size
 ```
 ```
 Get-Size -Ascending -SortProperty Size *  
+```  
+To install, copy the __*SizeModule*__ folder to the __*PowerShell/Modules*__ directory for your user. (`$env:PSModulePath` will reveal the location on your system.)  
+Then at the prompt enter:  
 ```
+Import-Module SizeModule
+```  
+Once imported the module will be available for all future sessions.  
 The repository also contains my WIP PowerShell ToDoList app.

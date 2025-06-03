@@ -1,4 +1,4 @@
-This is my collection of PowerShell scripts, including my `Get-Size` module, which shows a more human readable size value when listing files and directories, inspired by the `-h` switch when using the BASH `ls` command.  
+This is my PowerShell `Get-Size` module, which shows a more human readable size value when listing files and directories, inspired by the `-h` switch when using the BASH `ls` command.  
 
 It's not very useful that `Get-ChildItem` shows filenames in bytes, it's difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
 

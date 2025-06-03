@@ -55,4 +55,3 @@ Then at the prompt enter:
 Import-Module SizeModule
 ```  
 Once imported the module will be available for all future sessions.  
-The repository also contains my WIP PowerShell ToDoList app.

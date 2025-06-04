@@ -1,4 +1,4 @@
-This is my PowerShell `Get-Size` module, which shows a more human readable size value when listing files and directories, much like BASH `ls -h`.  
+This is my PowerShell `Get-Size` module, which shows a more human readable size value when listing files and directories, much like BASH `du -h`.  
 
 It's not very useful that `Get-ChildItem` shows filenames in bytes, it's difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
 

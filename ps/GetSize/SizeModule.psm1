@@ -5,11 +5,9 @@
  including variables storing a list of items, e.g. Get-Size $mylist
 #>
 function Get-Size {
-    [CmdletBinding()] # < This makes it an advanced function
+    [CmdletBinding()]
     param(
         [Parameter(
-            #Position = 0, 
-            #Mandatory = $true, 
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true)]
         [array]$List,
@@ -24,6 +22,10 @@ function Get-Size {
         if (!$SortProperty) {
             $SortProperty = 'Size'
         }
+        $KBColor = "`e[37m"   # White for KB
+        $MBColor = "`e[33m"   # Yellow for MB
+        $GBColor = "`e[36m"   # Cyan for GB
+        $ResetColor = "`e[0m" # Reset formatting        
     }
 
     Process {
@@ -40,7 +42,6 @@ function Get-Size {
                 else {
                     Get-Size $Item -SortProperty $SortProperty
                 }
-                #Write-Output "recursion not supported for now"
             }
             else {
                 $Type = "File"
@@ -65,28 +66,14 @@ function Get-Size {
                 $SizeResult = Get-SizeScale $Size # get a hashtable of size and scale factor for human-readability
                 $SizeStr = [string]$SizeResult.FileSize + ' ' + $SizeResult.Scale
                 $Output += [PSCustomObject]@{
-                    Type        = $Type
-                    Name        = $Item.Name
-                    NameString  = $Item.NameString
-                    SizeStr     = $SizeStr
-                    Size        = $Size
+                    Type       = $Type
+                    Name       = $Item.Name
+                    NameString = $Item.NameString
+                    SizeStr    = $SizeStr
+                    Size       = $Size
                 }
             }
         }
-
-        # Calculate a histogram of each item's size
-        <#
-        if ($Output.Length -gt 1) {
-            foreach ($element in $Output) {
-                $printStr = ''
-                $percentValue = [Math]::Round(($element.Size / $TotalSize) * 100)
-                for ($i = 1; $i -le $percentValue; $i++) {
-                    $printStr += $blockChar
-                }
-                $element.Percentage = $printStr
-            }
-        }
-        #>
         
         # Apply sorting logic
         if ($Descending) {
@@ -96,7 +83,21 @@ function Get-Size {
             # default sort is ascending, no need to specify it
             $Output = $Output | Sort-Object -Property $SortProperty
         }
-        return $Output | Format-Table 'Type', @{Name = 'Name'; Expression = {$_.NameString}}, @{Name = 'Size'; Expression = { $_.SizeStr }; Alignment = 'right' }
+        return $Output | Format-Table `
+            'Type', `
+        @{
+            Name       = 'Name';
+            Expression = { $_.NameString }
+        },
+        @{
+            Name       = 'Size';
+            Expression = {
+                if ($_.SizeStr -match 'KB') { "$KBColor$($_.SizeStr)$ResetColor" }
+                elseif ($_.SizeStr -match 'MB') { "$MBColor$($_.SizeStr)$ResetColor" }
+                else { "$GBColor$($_.SizeStr)$ResetColor" }
+            };
+            Alignment  = 'right'
+        }
     }
     End {
     }

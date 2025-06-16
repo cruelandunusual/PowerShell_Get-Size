@@ -2,11 +2,15 @@ This is my PowerShell `Get-Size` module, which shows a more human readable size 
 
 It's not very useful that `Get-ChildItem` shows filenames in bytes, it's difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
 
-![Get-ChildItem output](https://github.com/user-attachments/assets/01b0e1f2-3c03-4d3b-8301-1f4203bdd526)
+![get-childitem_output_screenshot](https://github.com/user-attachments/assets/9027406d-05b1-43f0-9e3c-5eb13f847fc3)
+
 
 `Get-Size` gets the size of files __*and*__ folders, in an instantly understandable format, e.g.:  
 
-![Get-Size output](https://github.com/user-attachments/assets/45a5def4-015f-4646-bdaf-6a4082ca3ae5)
+![get-size_output_screenshot](https://github.com/user-attachments/assets/e5bf0b95-97cb-46c4-bd6d-861a35c6768f)
+
+
+The text in the size column is white for sizes up to 1BM, yellow for sizes between 1MB and 1GB, and blue for sizes 1GB and above. Sizes are truncated to two decimal places.  
 
 It respects the colour coding of files and folders, although shows the item type in the leftmost column in case the user's terminal colour settings don't differentiate between files and folders.  
 

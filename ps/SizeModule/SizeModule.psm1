@@ -16,15 +16,18 @@ function Get-Size {
         [switch]$Ascending
     )
     Begin {
+        # If no argument given for files/folders just do everything in current folder
         if (!$List) {
             $List = '*'
         }
+        # Default sort property is file size
         if (!$SortProperty) {
             $SortProperty = 'Size'
         }
-        $KBColor = "`e[37m"   # White for KB
-        $MBColor = "`e[33m"   # Yellow for MB
-        $GBColor = "`e[36m"   # Cyan for GB
+        # Ansi escape codes for formatting output
+        $KBColor    = "`e[37m"   # White for KB
+        $MBColor    = "`e[33m"   # Yellow for MB
+        $GBColor    = "`e[36m"   # Cyan for GB
         $ResetColor = "`e[0m" # Reset formatting        
     }
 

@@ -4,7 +4,7 @@
  e.g. Get-Size D:\Audio, $HOME\Documents, myfile.txt
  including variables storing a list of items, e.g. Get-Size $mylist
 #>
-function Get-Size {
+function Get-Size_ {
     [CmdletBinding()]
     param(
         [Parameter(
@@ -25,25 +25,33 @@ function Get-Size {
             $SortProperty = 'Size'
         }
         # Ansi escape codes for formatting output
-        $KBColor    = "`e[37m"   # White for KB
-        $MBColor    = "`e[33m"   # Yellow for MB
-        $GBColor    = "`e[36m"   # Cyan for GB
+        $KBColor = "`e[37m"   # White for KB
+        $MBColor = "`e[33m"   # Yellow for MB
+        $GBColor = "`e[36m"   # Cyan for GB
         $ResetColor = "`e[0m" # Reset formatting        
     }
 
     Process {
-        # Executes once for each pipeline object
         $Output = @() # initialise the array to return
         $TotalSize = 0
+        $ListLength = $List.Count
+        $counter = 0
+    
         foreach ($ListItem in $List) {
             $Item = Get-Item $ListItem # need to explicitly get the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
+
+            $percent = ($counter / $ListLength) * 100
+            Write-Progress -Activity "Calculating..." `
+                -Status "Getting size of $($Item.Name)" `
+                -PercentComplete $percent
+            
             if ($Item -is [array]) {
                 <# If $Item is itself an array of items then Get-Size $Item will recursively get the size of each element #>
                 if ($Descending) {
-                    Get-Size $Item -SortProperty $SortProperty -Descending
+                    Get-Size_ $Item -SortProperty $SortProperty -Descending
                 }
                 else {
-                    Get-Size $Item -SortProperty $SortProperty
+                    Get-Size_ $Item -SortProperty $SortProperty
                 }
             }
             else {
@@ -60,6 +68,7 @@ function Get-Size {
                     # it's a folder so recursively compute size
                     $Type = "Directory"
                     $Size = (Get-ChildItem -Recurse -Path $Item | Measure-Object -Property Length -Sum).Sum
+                    
                     if ($null -eq $Size) {
                         # empty directory so no Lengths were -Summed; in this case we'll set $Size to zero
                         $Size = 0
@@ -76,6 +85,7 @@ function Get-Size {
                     Size       = $Size
                 }
             }
+            $counter++
         }
         
         # Apply sorting logic

@@ -4,7 +4,7 @@
  e.g. Get-Size D:\Audio, C:\Documents, myfile.txt
  including variables storing a list of items, e.g. Get-Size $mylist
 #>
-function Get-Size {
+function Get-Size_ {
     [CmdletBinding()]
     param(
         [Parameter(
@@ -49,10 +49,10 @@ function Get-Size {
             if ($Item -is [array]) {
                 <# If $Item is itself an array of items then Get-Size $Item will recursively get the size of each element #>
                 if ($Descending) {
-                    Get-Size $Item -SortProperty $SortProperty -Descending
+                    Get-Size_ $Item -SortProperty $SortProperty -Descending
                 }
                 else {
-                    Get-Size $Item -SortProperty $SortProperty
+                    Get-Size_ $Item -SortProperty $SortProperty
                 }
             }
             else {

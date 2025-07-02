@@ -1,45 +1,48 @@
-This is my PowerShell `Get-Size` module, which shows a more human readable size value when listing files and directories, much like BASH `du -h`.  
+# Description
+This PowerShell Core `Get-Size` module shows a human-readable size value when listing files and directories, similar to Bash `du -h`.  
 
-It's not very useful that `Get-ChildItem` shows filenames in bytes, it's difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
+`Get-ChildItem` shows file sizes in bytes, which can be difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
 
 ![get-childitem_output_screenshot](https://github.com/user-attachments/assets/9027406d-05b1-43f0-9e3c-5eb13f847fc3)
 
+`Get-Size` gets the size of both files __*and*__ folders, in a more easily understandable format.
 
-`Get-Size` gets the size of files __*and*__ folders, in an instantly understandable format, e.g.:  
+The text in the size column is color-coded for clarity: white for sizes up to 1MB, yellow for sizes between 1MB and 1GB, and blue for sizes 1GB and above. Sizes are truncated to two decimal places, e.g.:  
 
 ![get-size_output_screenshot](https://github.com/user-attachments/assets/e5bf0b95-97cb-46c4-bd6d-861a35c6768f)
 
+`Get-Size` preserves the user's terminal color settings for files and folders, i.e. folder highlighting is preserved.  
+It also shows the item `Type` in the leftmost column in case those settings don't differentiate between files and folders. This is particularly useful because the results are sorted by either Name or Size, so directories and files may be adjacent in the results, e.g.:  
 
-The text in the size column is white for sizes up to 1MB, yellow for sizes between 1MB and 1GB, and blue for sizes 1GB and above. Sizes are truncated to two decimal places.  
-
-It respects the colour coding of files and folders, although shows the item type in the leftmost column in case the user's terminal colour settings don't differentiate between files and folders.  
-
-You can pass multiple items in a comma separated list of symbols, e.g.  
+![get-size_leftmost_column_screenshot](<screenshots/get-size leftmost column-3.jpg>)  
+# Usage
+Input can be items in a comma separated list (aka symbols), e.g.:  
 ```
-Get-Size D:\Audio, $HOME\Documents, myfile.txt
+Get-Size D:\Music, D:\Pictures, myfile.txt
 ```
-including variables storing a list of items, e.g.  
+Variables storing a list of items can also be used, e.g.:  
 ```
+$mylist = Get-ChildItem D:\Documents\
 Get-Size $mylist  
 ```
-as well as combinations of the two:
+Combinations of the two are supported:
 ```
-Get-Size $mylist, D:\Documents
+Get-Size $mylist, D:\Pictures
 ```
-The modifiable options are `-SortProperty` and `-Descending` / `-Ascending`.  
+The modifiable options are `-SortProperty` and `-Descending` / `-Ascending`.   
 `-Descending` and `-Ascending` are simple switches.  
-*(By default `Get-Size` sorts its results by size in ascending order, so you can leave out `-Ascending`.)*  
-
 `-SortProperty` expects either `Name` or `Size`.  
 
-The switches can be given in any order, e.g.  
+The options can be given in any order, e.g.  
 ```
 Get-Size -Descending -SortProperty Name
 ```
 ```
 Get-Size -SortProperty Name -Descending  
 ```
-Leaving out filenames, variables or wildcards will default to showing the content of the current directory, the same way `Get-ChildItem` works, so the following are equivalent:  
+By default `Get-Size` sorts its results by size in ascending order, so `-Ascending` can be ommitted.  
+
+Leaving out filenames, variables or wildcards will default to showing the content of the current directory, the same way `Get-ChildItem` works, so the following are all equivalent:  
 
 ```
 Get-Size  
@@ -53,7 +56,20 @@ Get-Size -Ascending -SortProperty Size
 ```
 Get-Size -Ascending -SortProperty Size *  
 ```  
-To install, copy the __*SizeModule*__ folder to the __*PowerShell/Modules*__ directory for your user. (`$env:PSModulePath` will reveal the location on your system.)  
+
+# Notes
+Large folders with deep nested structures and many files may take some time to calculate. Write-Progress has been implemented as a convenience to the user.  
+
+# Installation
+`Get-Size` requires PowerShell Core, minimum version 7.0  
+To install, clone this repo and copy the __*SizeModule*__ folder to the __*Modules*__ folder for your user, typically:
+- __Linux__  / __MacOS__
+  - ~/.local/share/powershell/Modules
+- __Windows__
+  - %USERPROFILE%\Documents\PowerShell\Modules
+
+*(Entering* `$env:PSModulePath` *at the command prompt will reveal the location on your system.)*  
+
 Then at the prompt enter:  
 ```
 Import-Module SizeModule

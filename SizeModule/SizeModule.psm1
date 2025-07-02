@@ -1,7 +1,7 @@
 <#
  Gets the size of a file or folder;
  can pass multiple items in a comma separated list of symbols,
- e.g. Get-Size D:\Audio, $HOME\Documents, myfile.txt
+ e.g. Get-Size D:\Audio, C:\Documents, myfile.txt
  including variables storing a list of items, e.g. Get-Size $mylist
 #>
 function Get-Size {
@@ -16,7 +16,8 @@ function Get-Size {
         [switch]$Ascending
     )
     Begin {
-        # If no argument given for files/folders just do everything in current folder
+        # If no argument given for files/folders
+        # Get-Size will operate on the items in the current folder
         if (!$List) {
             $List = '*'
         }

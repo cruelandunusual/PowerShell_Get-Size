@@ -16,7 +16,7 @@ function Get-Size {
         [switch]$Ascending
     )
     Begin {
-        # If no argument given for files/folders
+        # If no argument given for files/folders, then
         # Get-Size will operate on the items in the current folder
         if (!$List) {
             $List = '*'

@@ -4,7 +4,7 @@
  e.g. Get-Size D:\Audio, C:\Documents, myfile.txt
  including variables storing a list of items, e.g. Get-Size $mylist
 #>
-function Get-Size_ {
+function Get-Size {
     [CmdletBinding()]
     param(
         [Parameter(
@@ -49,10 +49,10 @@ function Get-Size_ {
             if ($Item -is [array]) {
                 <# If $Item is itself an array of items then Get-Size $Item will recursively get the size of each element #>
                 if ($Descending) {
-                    Get-Size_ $Item -SortProperty $SortProperty -Descending
+                    Get-Size $Item -SortProperty $SortProperty -Descending
                 }
                 else {
-                    Get-Size_ $Item -SortProperty $SortProperty
+                    Get-Size $Item -SortProperty $SortProperty
                 }
             }
             else {
@@ -115,6 +115,32 @@ function Get-Size_ {
     }
     End {
     }
+    <#
+.SYNOPSIS
+    Gets the size of a file or folder in a human-readable format;
+ 
+.DESCRIPTION
+    `Get-Size` gets the size of a file or folder in a human-readable format;
+    output is colorized by size category for quick recognition.
+    It accepts multiple items in a comma-separated list of symbols,
+    e.g. Get-Size D:\Audio, D:\Documents, myfile.txt
+    as well as variables storing a list of items, e.g. Get-Size $mylist
+     
+.PARAMETER param
+    param is assumed to be a list of both the string to be searched and the indexes.
+    The function determines whether a comma-separated list of indexes or a variable storing indexes has been passed.
+.INPUTS
+    `Get-Size` accepts pipeline input objects.
+.OUTPUTS
+    Object[]. Outout is returned through Format-Table to enable colorized output.
+.EXAMPLE
+    $myfiles = Get-ChildItem D:\Documents\
+    Get-Size $myfiles
+.EXAMPLE
+    Get-Size D:\Audio, $myfiles
+.NOTES
+    output is returned through Format-Table and can't be usefully piped further.
+#>    
 }
 
 <#

@@ -115,43 +115,6 @@ function Get-Size {
     }
     End {
     }
-      <#
-.SYNOPSIS
-    Returns the characters from a string at the specified indexes.
-
-.DESCRIPTION
-    The `Get-CharAtIndex` function returns the character(s) found in a string at the specified list of indexes.
-    The string is indexed from 1, not 0. The first parameter must be the string to be searched, followed by the indexes.
-    The indexes can be a comma-separated list of integers, or a single variable storing an array of integer indexes.
-    For example:
-    $s = "abcdefg"
-    $indexes = 1, 4, 7
-    Get-CharAtIndex $s, $indexes ## returns adg
-    
-.PARAMETER param
-    param is assumed to be a list of both the string to be searched and the indexes.
-    The function determines whether a comma-separated list of indexes or a variable storing indexes has been passed.
-.INPUTS
-    None. You can't pipe objects to Get-CharAtIndex.
-.OUTPUTS
-    System.String. Get-CharAtIndex returns a string of the characters found in the supplied string.
-.EXAMPLE
-    Get-CharAtIndex "abcdefg", 1, 4, 7 ## returns adg
-    # Passing a comma-separated list of integer indexes directly to the function
-.EXAMPLE
-    $indexes = 1, 4, 7
-    Get-CharAtIndex "abcdefg", $indexes ## returns adg
-    # Passing a variable referencing a list of indexes
-.EXAMPLE
-    $s = "abcdefg"
-    $indexes = 1, 4, 7
-    Get-CharAtIndex $s, $indexes ## returns adg
-    # Passing a variable reference to the string is supported
-.NOTES
-    Indexes outside the bounds of the string return nothing.
-    For example:
-    Get-CharAtIndex "abcdefg", 1, 4, 70  ## returns 'ad'
-#>
 }
 
 <#

@@ -51,7 +51,7 @@ function Get-Size {
             }
             else {
                 $Type = "File"
-                $Size = 0 # (re)set to zero each loop iteration; not strictly necessary but I prefer it for clarity
+                $Size = 0 # initialise a variable for the $Item's size every loop iteration
                 if (!$Item.PSIsContainer) {
                     # it's a file so get its length property
                     $Size = $Item.Length

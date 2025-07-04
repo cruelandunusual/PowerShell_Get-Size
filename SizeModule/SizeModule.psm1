@@ -10,12 +10,12 @@ function Get-Size {
         [switch]$Ascending
     )
     Begin {
-        # If no argument given for files/folders, then
+        # if no argument given for files/folders, then
         # Get-Size will operate on the items in the current folder
         if (!$List) {
             $List = '*'
         }
-        # Default sort property is file size
+        # default sort property is file size
         if (!$SortProperty) {
             $SortProperty = 'Size'
         }
@@ -29,19 +29,19 @@ function Get-Size {
     Process {
         $Output = @() # initialise the array to return
         $TotalSize = 0
+        # the following two variables are used by Write-Progress to calculate % completion
         $ListLength = $List.Count
         $counter = 0
     
         foreach ($ListItem in $List) {
-            $Item = Get-Item $ListItem # need to explicitly get the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
-
+            $Item = Get-Item $ListItem # need to explicitly 'get' the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
             $percent = ($counter / $ListLength) * 100
             Write-Progress -Activity "Calculating..." `
                 -Status "Getting size of $($Item.Name)" `
                 -PercentComplete $percent
             
             if ($Item -is [array]) {
-                <# If $Item is itself an array of items then Get-Size $Item will recursively get the size of each element #>
+                # if $Item is itself an array of items then Get-Size $Item will recursively get the size of each element
                 if ($Descending) {
                     Get-Size $Item -SortProperty $SortProperty -Descending
                 }
@@ -52,15 +52,12 @@ function Get-Size {
             else {
                 $Type = "File"
                 $Size = 0 # (re)set to zero each loop iteration; not strictly necessary but I prefer it for clarity
-                #! testing for a file using Test-Path fails for some files with non-standard chars in name, e.g. '['
-                #if(Test-Path $Item -PathType Leaf) {
-                #! testing for a file using .PSIsContainer sidesteps any tests on file name
                 if (!$Item.PSIsContainer) {
                     # it's a file so get its length property
                     $Size = $Item.Length
                 }
                 else {
-                    # it's a folder so recursively compute size
+                    # it's a folder so recursively compute the size of its contents
                     $Type = "Directory"
                     $Size = (Get-ChildItem -Recurse -Path $Item | Measure-Object -Property Length -Sum).Sum
                     
@@ -83,7 +80,8 @@ function Get-Size {
             $counter++
         }
         
-        # Apply sorting logic
+        # apply sorting logic - whether ascending or descending we
+        # pipe the output array through Sort-Object with the appropriate flags
         if ($Descending) {
             $Output = $Output | Sort-Object -Property $SortProperty -Descending
         }
@@ -117,14 +115,20 @@ function Get-Size {
     `Get-Size` gets the size of a file or folder in a human-readable format.
     Output can be sorted by either file/folder name or size. Size is default.
     Output can be sorted Ascending or Descending. Ascending is default.
-    Output is colorized by size for quick recognition, e.g. three separate colora for items up to 1MB, items between 1MB and 1GB, and items larger than 1GB.
+    Output is colorized by size for quick recognition; a separate color for items up to 1MB, items between 1MB and 1GB, and items larger than 1GB.
     Input can be multiple items in a comma-separated list of symbols,
     e.g. Get-Size D:\Audio, D:\Documents, myfile.txt
     as well as variables storing a list of items, e.g. Get-Size $mylist
      
-.PARAMETER param
-    param is assumed to be a list of both the string to be searched and the indexes.
-    The function determines whether a comma-separated list of indexes or a variable storing indexes has been passed.
+.PARAMETER List
+    `List` specifies the input list of items to be calculated
+.PARAMETER SortProperty
+    The `SortProperty` property specifies whether to sort by Name or Size. Default is Size. The syntax is:
+    -SortProperty "Name" or -SortProperty Name
+.PARAMETER Ascending/Descending
+    Switch that specifies how to sort the list of results. Ascending is default so it can be ommitted.
+    The syntax is:
+    -Descending
 .INPUTS
     `Get-Size` accepts pipeline input objects.
 .OUTPUTS

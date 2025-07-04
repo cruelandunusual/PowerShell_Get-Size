@@ -1,9 +1,3 @@
-<#
- Gets the size of a file or folder;
- can pass multiple items in a comma separated list of symbols,
- e.g. Get-Size D:\Audio, C:\Documents, myfile.txt
- including variables storing a list of items, e.g. Get-Size $mylist
-#>
 function Get-Size {
     [CmdletBinding()]
     param(
@@ -120,9 +114,11 @@ function Get-Size {
     Gets the size of a file or folder in a human-readable format;
  
 .DESCRIPTION
-    `Get-Size` gets the size of a file or folder in a human-readable format;
-    output is colorized by size category for quick recognition.
-    It accepts multiple items in a comma-separated list of symbols,
+    `Get-Size` gets the size of a file or folder in a human-readable format.
+    Output can be sorted by either file/folder name or size. Size is default.
+    Output can be sorted Ascending or Descending. Ascending is default.
+    Output is colorized by size for quick recognition, e.g. three separate colora for items up to 1MB, items between 1MB and 1GB, and items larger than 1GB.
+    Input can be multiple items in a comma-separated list of symbols,
     e.g. Get-Size D:\Audio, D:\Documents, myfile.txt
     as well as variables storing a list of items, e.g. Get-Size $mylist
      
@@ -132,14 +128,14 @@ function Get-Size {
 .INPUTS
     `Get-Size` accepts pipeline input objects.
 .OUTPUTS
-    Object[]. Outout is returned through Format-Table to enable colorized output.
+    Object[]. Returns an array of PSCustomObjects. Outout is returned through Format-Table to enable colorized output.
 .EXAMPLE
     $myfiles = Get-ChildItem D:\Documents\
     Get-Size $myfiles
 .EXAMPLE
     Get-Size D:\Audio, $myfiles
 .NOTES
-    output is returned through Format-Table and can't be usefully piped further.
+    Output is returned through Format-Table and can't be usefully piped further.
 #>    
 }
 

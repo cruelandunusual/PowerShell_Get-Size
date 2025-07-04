@@ -4,21 +4,23 @@ function Get-Size {
         [Parameter(
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true)]
-        [array]$List,
-        [string]$SortProperty,
+        [array]$List = '*',
+        [string]$SortProperty = 'Size',
         [switch]$Descending,
         [switch]$Ascending
     )
     Begin {
-        # if no argument given for files/folders, then
-        # Get-Size will operate on the items in the current folder
-        if (!$List) {
-            $List = '*'
+        $paramError = $false
+        try {
+            if ($Descending -and $Ascending) {
+                throw [System.ArgumentException]::new("Invalid argument combination passed")
+            }
         }
-        # default sort property is file size
-        if (!$SortProperty) {
-            $SortProperty = 'Size'
+        catch {
+            Write-Error "$($_): can't specify both Ascending and Descending sort options at the same time"
+            $paramError = $true
         }
+
         # Ansi escape codes for formatting output
         $KBColor = "`e[37m"   # White for KB
         $MBColor = "`e[33m"   # Yellow for MB
@@ -27,14 +29,15 @@ function Get-Size {
     }
 
     Process {
+        if ($paramError) { return }
         $Output = @() # initialise the array to return
-        $TotalSize = 0
+        $TotalSize = 0 # total size of each separate input object (i.e. file or folder) to be calculated
         # the following two variables are used by Write-Progress to calculate % completion
         $ListLength = $List.Count
         $counter = 0
     
         foreach ($ListItem in $List) {
-            $Item = Get-Item $ListItem # need to explicitly 'get' the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
+            $Item = Get-Item $ListItem # need to explicitly get a handle to the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
             $percent = ($counter / $ListLength) * 100
             Write-Progress -Activity "Calculating..." `
                 -Status "Getting size of $($Item.Name)" `
@@ -43,7 +46,7 @@ function Get-Size {
             if ($Item -is [array]) {
                 # if $Item is itself an array of items then Get-Size $Item will recursively get the size of each element
                 if ($Descending) {
-                    Get-Size $Item -SortProperty $SortProperty -Descending
+                    Get-Size $Item -SortProperty $SortProperty -Descending # pass Descending switch to the recursive function call
                 }
                 else {
                     Get-Size $Item -SortProperty $SortProperty
@@ -68,12 +71,13 @@ function Get-Size {
                 }
                 $TotalSize += $Size
                 $SizeResult = Get-SizeScale $Size # get a hashtable of size and scale factor for human-readability
-                $SizeStr = [string]$SizeResult.FileSize + ' ' + $SizeResult.Scale
+                $SizeString = [string]$SizeResult.FileSize + ' ' + $SizeResult.Scale
+                # Output is an array of custom objects
                 $Output += [PSCustomObject]@{
                     Type       = $Type
                     Name       = $Item.Name
                     NameString = $Item.NameString
-                    SizeStr    = $SizeStr
+                    SizeString = $SizeString
                     Size       = $Size
                 }
             }
@@ -100,9 +104,9 @@ function Get-Size {
         @{
             Name       = 'Size';
             Expression = {
-                if ($_.SizeStr -match 'KB') { "$KBColor$($_.SizeStr)$ResetColor" }
-                elseif ($_.SizeStr -match 'MB') { "$MBColor$($_.SizeStr)$ResetColor" }
-                else { "$GBColor$($_.SizeStr)$ResetColor" }
+                if ($_.SizeString -match 'KB') { "$KBColor$($_.SizeString)$ResetColor" }
+                elseif ($_.SizeString -match 'MB') { "$MBColor$($_.SizeString)$ResetColor" }
+                else { "$GBColor$($_.SizeString)$ResetColor" }
             };
             Alignment  = 'right'
         }
@@ -111,7 +115,7 @@ function Get-Size {
     }
     <#
 .SYNOPSIS
-    Gets the size of a file or folder in a human-readable format;
+    Gets the size of a file or folder in a human-readable format
  
 .DESCRIPTION
     `Get-Size` gets the size of a file or folder in a human-readable format.

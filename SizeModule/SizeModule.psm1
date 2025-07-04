@@ -82,6 +82,7 @@ function Get-Size {
         
         # apply sorting logic - whether ascending or descending we
         # pipe the output array through Sort-Object with the appropriate flags
+        # and overwrite the original array variable with the sorted version
         if ($Descending) {
             $Output = $Output | Sort-Object -Property $SortProperty -Descending
         }
@@ -89,6 +90,7 @@ function Get-Size {
             # default sort is ascending, no need to specify it
             $Output = $Output | Sort-Object -Property $SortProperty
         }
+        # $Output is returned piped through Format-Table to enable colorizing of size values
         return $Output | Format-Table `
             'Type', `
         @{

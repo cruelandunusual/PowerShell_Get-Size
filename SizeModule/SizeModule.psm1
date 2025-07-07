@@ -72,12 +72,16 @@ function Get-Size {
                         $Size = 0
                     }
                 }
-                $SizeString = Get-SizeScale $Size
-                # Output is an array of custom objects
+                $SizeString = Get-SizeScale $Size # Get-SizeScale returns the size as a formatted string, e.g. '4.32 MB'
+                # Output is an array of custom objects;
+                # only Type, NameString and SizeString are output to user;
+                # Name and Size are required by the sorting options
                 $Output += [PSCustomObject]@{
                     Type       = $Type
+                    Name       = $Item.Name
                     NameString = $Item.NameString
                     SizeString = $SizeString
+                    Size       = $Size
                 }
             }
             $WPcounter++

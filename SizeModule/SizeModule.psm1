@@ -52,7 +52,7 @@ function Get-Size {
                     Get-Size $Item -SortProperty $SortProperty -Descending # pass Descending switch to the recursive function call
                 }
                 else {
-                    Get-Size $Item -SortProperty $SortProperty
+                    Get-Size $Item -SortProperty $SortProperty -Ascending
                 }
             }
             else {

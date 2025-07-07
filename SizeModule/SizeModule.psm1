@@ -31,17 +31,20 @@ function Get-Size {
     Process {
         if ($paramError) { return }
         $Output = @() # initialise the array to return
-        $TotalSize = 0 # total size of each separate input object (i.e. file or folder) to be calculated
-        # the following two variables are used by Write-Progress to calculate % completion
-        $ListLength = $List.Count
-        $counter = 0
+
+        <# the following two variables are used by Write-Progress to calculate % completion #>
+        $WPListLength = $List.Count
+        $WPcounter = 0
     
         foreach ($ListItem in $List) {
             $Item = Get-Item $ListItem # need to explicitly get a handle to the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
-            $percent = ($counter / $ListLength) * 100
+
+            <# -------------- Write-Progress section -------------- #>
+            $WPpercent = ($WPcounter / $WPListLength) * 100
             Write-Progress -Activity "Calculating..." `
                 -Status "Getting size of $($Item.Name)" `
-                -PercentComplete $percent
+                -PercentComplete $WPpercent
+            <# -------------- End Write-Progress section -------------- #>
             
             if ($Item -is [array]) {
                 # if $Item is itself an array of items then Get-Size $Item will recursively get the size of each element
@@ -69,19 +72,15 @@ function Get-Size {
                         $Size = 0
                     }
                 }
-                $TotalSize += $Size
-                $SizeResult = Get-SizeScale $Size # get a hashtable of size and scale factor for human-readability
-                $SizeString = [string]$SizeResult.FileSize + ' ' + $SizeResult.Scale
+                $SizeString = Get-SizeScale $Size
                 # Output is an array of custom objects
                 $Output += [PSCustomObject]@{
                     Type       = $Type
-                    Name       = $Item.Name
                     NameString = $Item.NameString
                     SizeString = $SizeString
-                    Size       = $Size
                 }
             }
-            $counter++
+            $WPcounter++
         }
         
         # apply sorting logic - whether ascending or descending we
@@ -150,30 +149,25 @@ function Get-Size {
 }
 
 <#
- Returns a hashtable containing the size of an item in GB, MB or KB,
- truncated to two decimal places, with an appropriate scale indicator
- as the second hashtable element
+ Returns the size as a string truncated to two decimal places, ending in KB, MB or GB.
 #>
 function Get-SizeScale {
     param(
         [Parameter(Mandatory = $true)] # The parameter is mandatory
         $Size
     )
-    $SizeScale = 'KB'
+    [string]$ScaleString = 'KB'
     if ($Size -gt 1GB) {
-        $FileSizeFormatted = $Size / 1GB
-        $SizeScale = 'GB'
+        $SizeFormatted = $Size / 1GB
+        $ScaleString = 'GB'
     }
     elseif ($Size -gt 1MB) {
-        $FileSizeFormatted = $Size / 1MB
-        $SizeScale = 'MB'
+        $SizeFormatted = $Size / 1MB
+        $ScaleString = 'MB'
     }
     else {
-        $FileSizeFormatted = $Size / 1KB
+        $SizeFormatted = $Size / 1KB
     }
-    $FileSizeFormatted = [math]::Round($FileSizeFormatted, 2) # truncate to two decimal places
-    return @{
-        FileSize = $FileSizeFormatted
-        Scale    = $SizeScale
-    }
+    $SizeFormatted = [math]::Round($SizeFormatted, 2) # truncate to two decimal places
+    return $SizeFormatted.ToString() + ' ' + $ScaleString
 }

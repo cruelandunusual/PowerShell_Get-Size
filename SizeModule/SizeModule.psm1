@@ -31,17 +31,19 @@ function Get-Size {
     Process {
         if ($paramError) { return }
         $Output = @() # initialise the array to return
-        $TotalSize = 0 # total size of each separate input object (i.e. file or folder) to be calculated
         # the following two variables are used by Write-Progress to calculate % completion
-        $ListLength = $List.Count
-        $counter = 0
+        $WPListLength = $List.Count
+        $WPcounter = 0
     
         foreach ($ListItem in $List) {
             $Item = Get-Item $ListItem # need to explicitly get a handle to the item in case only a symbol is passed, e.g. .\Documents instead of $Documents
-            $percent = ($counter / $ListLength) * 100
+
+            <# -------------- Write-Progress section -------------- #>
+            $WPpercent = ($WPcounter / $WPListLength) * 100
             Write-Progress -Activity "Calculating..." `
                 -Status "Getting size of $($Item.Name)" `
-                -PercentComplete $percent
+                -PercentComplete $WPpercent
+            <# -------------- End Write-Progress section -------------- #>
             
             if ($Item -is [array]) {
                 # if $Item is itself an array of items then Get-Size $Item will recursively get the size of each element
@@ -49,7 +51,7 @@ function Get-Size {
                     Get-Size $Item -SortProperty $SortProperty -Descending # pass Descending switch to the recursive function call
                 }
                 else {
-                    Get-Size $Item -SortProperty $SortProperty
+                    Get-Size $Item -SortProperty $SortProperty -Ascending
                 }
             }
             else {
@@ -69,7 +71,6 @@ function Get-Size {
                         $Size = 0
                     }
                 }
-                $TotalSize += $Size
                 $SizeResult = Get-SizeScale $Size # get a hashtable of size and scale factor for human-readability
                 $SizeString = [string]$SizeResult.FileSize + ' ' + $SizeResult.Scale
                 # Output is an array of custom objects
@@ -81,7 +82,7 @@ function Get-Size {
                     Size       = $Size
                 }
             }
-            $counter++
+            $WPcounter++
         }
         
         # apply sorting logic - whether ascending or descending we
@@ -91,7 +92,6 @@ function Get-Size {
             $Output = $Output | Sort-Object -Property $SortProperty -Descending
         }
         else {
-            # default sort is ascending, no need to specify it
             $Output = $Output | Sort-Object -Property $SortProperty
         }
         # $Output is returned piped through Format-Table to enable colorizing of size values

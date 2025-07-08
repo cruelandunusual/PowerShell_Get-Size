@@ -142,7 +142,7 @@ function Get-Size {
 .OUTPUTS
     Object[]. Returns an array of PSCustomObjects. Outout is returned through Format-Table to enable colorized output.
 .EXAMPLE
-        Get-Size D:\Audio
+    Get-Size D:\Audio
 .EXAMPLE
     $myfiles = Get-ChildItem D:\Documents\
     Get-Size $myfiles

@@ -94,7 +94,6 @@ function Get-Size {
             $Output = $Output | Sort-Object -Property $SortProperty -Descending
         }
         else {
-            # default sort is ascending, no need to specify it
             $Output = $Output | Sort-Object -Property $SortProperty
         }
         # $Output is returned piped through Format-Table to enable colorizing of size values
@@ -143,6 +142,8 @@ function Get-Size {
 .OUTPUTS
     Object[]. Returns an array of PSCustomObjects. Outout is returned through Format-Table to enable colorized output.
 .EXAMPLE
+        Get-Size D:\Audio
+.EXAMPLE
     $myfiles = Get-ChildItem D:\Documents\
     Get-Size $myfiles
 .EXAMPLE
@@ -153,7 +154,7 @@ function Get-Size {
 }
 
 <#
- Returns the size as a string truncated to two decimal places, ending in KB, MB or GB.
+ Returns the size as a string truncated to two decimal places, ending in KB, MB or GB; e.g. '4.38 MB'
 #>
 function Get-SizeScale {
     param(

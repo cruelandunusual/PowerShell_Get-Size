@@ -6,7 +6,7 @@
 ![PowerShell](https://img.shields.io/badge/-PowerShell_Core-blue)
 
 ## Description
-This PowerShell Core `Get-Size` module shows a human-readable size value when listing files and folders, similar to Bash `du -h`.  
+This PowerShell Core `Get-Size` cmdlet shows a human-readable size value when listing files and folders, similar to Bash `du -h`.  
 
 `Get-ChildItem` shows file sizes in bytes, which can be difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
 
@@ -20,7 +20,8 @@ The text in the size column is color-coded for clarity, with a different color f
 
 Folder highlighting is preserved as per the user's terminal settings, however the item `Type` is shown in the leftmost column in case the user's settings don't differentiate files and folders. This is particularly useful because the results are sorted by either Name or Size, so folders and files may be adjacent in the results, e.g.:  
 
-![get-size_leftmost_column_screenshot](<screenshots/get-size leftmost column.jpg>)  
+![get-size_leftmost_column_screenshot](<screenshots/get-size_leftmost_column.jpg>)  
+
 ## Usage
 Input can be items in a comma separated list (aka symbols), e.g.:  
 ```
@@ -62,6 +63,9 @@ Get-Size -Ascending -SortProperty Size
 ```
 Get-Size -Ascending -SortProperty Size *  
 ```  
+`Get-Size` is fully documented; type `Get-Help Get-Size` for documentation while using the cmdlet:  
+
+![get-size_leftmost_column_screenshot](<screenshots/get-size_get-help_output_screenshot.jpg>)  
 
 ## Notes
 Large folders with deep nested structures and many files may take some time to calculate. Write-Progress has been implemented as a convenience to the user.  

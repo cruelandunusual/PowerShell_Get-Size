@@ -64,38 +64,8 @@ Get-Size -Ascending -SortProperty Size
 Get-Size -Ascending -SortProperty Size *  
 ```  
 `Get-Size` is fully documented; type `Get-Help Get-Size` for documentation while using the cmdlet:  
-```powershell
-PS 7.5.2 test> Get-Help Get-Size
 
-NAME
-    Get-Size
-
-SYNOPSIS
-    Gets the size of a file or folder in a human-readable format
-
-
-SYNTAX
-    Get-Size [[-List] <Array>] [[-SortProperty] <String>] [-Descending] [-Ascending] [<CommonParameters>]
-
-
-DESCRIPTION
-    `Get-Size` gets the size of a file or folder in a human-readable format.
-    Output can be sorted by either file/folder name or size. Size is default.
-    Output can be sorted Ascending or Descending. Ascending is default.
-    Output is colorized by size for quick recognition;
-    a separate color for items up to 1MB, items between 1MB and 1GB, and items larger than 1GB.
-    Input can be multiple items in a comma-separated list of symbols,
-    e.g. Get-Size D:\Audio, D:\Documents, myfile.txt
-    as well as variables storing a list of items, e.g. Get-Size $mylist
-
-
-RELATED LINKS
-
-REMARKS
-    To see the examples, type: "Get-Help Get-Size -Examples"
-    For more information, type: "Get-Help Get-Size -Detailed"
-    For technical information, type: "Get-Help Get-Size -Full"
-```
+![get-size_get-help_output_screenshot](<screenshots/get-size_get-help_output_screenshot2.jpg>)  
 
 ## Notes
 Large folders with deep nested structures and many files may take some time to calculate. Write-Progress has been implemented as a convenience to the user.  

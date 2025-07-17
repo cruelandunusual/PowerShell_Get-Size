@@ -123,7 +123,8 @@ function Get-Size {
     `Get-Size` gets the size of a file or folder in a human-readable format.
     Output can be sorted by either file/folder name or size. Size is default.
     Output can be sorted Ascending or Descending. Ascending is default.
-    Output is colorized by size for quick recognition; a separate color for items up to 1MB, items between 1MB and 1GB, and items larger than 1GB.
+    Output is colorized by size for quick recognition;
+    a separate color for items up to 1MB, items between 1MB and 1GB, and items larger than 1GB.
     Input can be multiple items in a comma-separated list of symbols,
     e.g. Get-Size D:\Audio, D:\Documents, myfile.txt
     as well as variables storing a list of items, e.g. Get-Size $mylist

@@ -65,7 +65,7 @@ Get-Size -Ascending -SortProperty Size *
 ```  
 `Get-Size` is fully documented; type `Get-Help Get-Size` for documentation while using the cmdlet:  
 
-![get-size_leftmost_column_screenshot](<screenshots/get-size_get-help_output_screenshot.jpg>)  
+![get-size_get-help_output_screenshot](<screenshots/get-size_get-help_output_screenshot2.jpg>)  
 
 ## Notes
 Large folders with deep nested structures and many files may take some time to calculate. Write-Progress has been implemented as a convenience to the user.  

@@ -63,7 +63,7 @@ Get-Size -Ascending -SortProperty Size
 ```powershell
 Get-Size -Ascending -SortProperty Size *  
 ```  
-`Get-Size` is fully documented; type `Get-Help Get-Size` for documentation while using the cmdlet:  
+`Get-Size` is fully documented; type `Get-Help Get-Size` for documentation on using the cmdlet, including examples:  
 
 ![get-size_get-help_output_screenshot](<screenshots/get-size_get-help_output_screenshot2.jpg>)  
 

@@ -80,10 +80,10 @@ To install, clone this repo and copy the __*SizeModule*__ folder to the __*Modul
 
 *(Entering* `$env:PSModulePath` *at the command prompt will reveal the location on your system.)*  
 
-> [!TIP]
-> *(Entering* `$env:PSModulePath` *at the command prompt will reveal the location on your system.)*  
-> Set-Location ($env:PSModulePath).Split(';')[0] # cd to the module location on Windows
-> Set-Location ($env:PSModulePath).Split(':')[0] # macOS / Linux version
+> [!TIP]  
+> Entering $env:PSModulePath at the command prompt will reveal the location on your system.  
+> Set-Location ($env:PSModulePath).Split(';')[0] # cd to the module location on Windows  
+> Set-Location ($env:PSModulePath).Split(':')[0] # macOS / Linux version  
 
 Then at the prompt enter:  
 ```powershell

@@ -1,4 +1,4 @@
-# Get-Size - a PowerShell cmdlet for human-readable file and folder listings
+# Get-Size - a PowerShell cmdlet for human-readable file and folder size listings
 
 ![Linux](https://img.shields.io/badge/-Linux-grey?logo=linux)
 ![macOS](https://img.shields.io/badge/-macOS-black?logo=apple)

@@ -68,7 +68,7 @@ Get-Size -Ascending -SortProperty Size *
 ![get-size_get-help_output_screenshot](<screenshots/get-size_get-help_output_screenshot2.jpg>)  
 
 ## Notes
-Large folders with deep nested structures and many files may take some time to calculate. Write-Progress has been implemented as a convenience to the user.  
+Large folders with deep nested structures and many files may take some time to calculate. `Write-Progress` has been implemented as a convenience to the user.  
 
 ## Installation
 `Get-Size` requires PowerShell Core, minimum version 7.0.  

@@ -23,7 +23,7 @@ Folder highlighting is preserved as per the user's terminal settings, however th
 ![get-size_leftmost_column_screenshot](<screenshots/get-size_leftmost_column.jpg>)  
 
 ## Usage
-Input can be items in a comma separated list (aka symbols), e.g.:  
+Input can be items (aka symbols) in a comma separated list, e.g.:  
 ```powershell
 Get-Size D:\Music, D:\Pictures, myfile.txt
 ```

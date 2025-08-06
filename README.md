@@ -18,7 +18,7 @@ The text in the size column is color-coded for clarity, with a different color f
 
 ![get-size_output_screenshot](<screenshots/get-size_output_screenshot.jpg>)
 
-Folder highlighting is preserved as per the user's terminal settings, however the item `Type` is shown in the leftmost column in case the user's settings don't differentiate files and folders. This is particularly useful because the results are sorted by either Name or Size, so folders and files may be adjacent in the results, e.g.:  
+Folder highlighting is preserved as per the user's terminal colour settings, however the item `Type` is shown in the leftmost column in case the user's colour settings don't differentiate files and folders. This is particularly useful because the results are sorted by either Name or Size, so folders and files may be adjacent in the results list, e.g.:  
 
 ![get-size_leftmost_column_screenshot](<screenshots/get-size_leftmost_column.jpg>)  
 

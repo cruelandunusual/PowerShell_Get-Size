@@ -8,11 +8,11 @@
 ## Description
 This PowerShell Core `Get-Size` cmdlet shows a human-readable size value when listing files and folders, similar to Bash `du -h`.  
 
-`Get-ChildItem` shows file sizes in bytes, which can be difficult to understand at a glance, and in any case it only shows the `Length` property for files, not folders, e.g.:  
+`Get-ChildItem` shows file sizes under the `Length` column in bytes, which can be difficult to understand at a glance, and in any case it only shows the property for files, _not_ folders, e.g.:  
 
 ![get-childitem_output_screenshot](<screenshots/get-childitem_output_screenshot.jpg>)
 
-`Get-Size` gets the size of both files __*and*__ folders, in a more easily understandable format.
+`Get-Size` displays the size of both files __*and*__ folders, in a more easily understandable format.
 
 The text in the size column is color-coded for clarity, with a different color for sizes up to 1MB, sizes between 1MB and 1GB, and for sizes 1GB and above. Sizes are truncated to two decimal places, e.g:  
 

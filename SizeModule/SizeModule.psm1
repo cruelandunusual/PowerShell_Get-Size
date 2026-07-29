@@ -131,6 +131,7 @@ function Get-Size {
      
 .PARAMETER List
     `List` specifies the input list of items to be calculated
+    `List` specifies the input list of items to be calculated
 .PARAMETER SortProperty
     The `SortProperty` property specifies whether to sort by Name or Size. Default is Size. The syntax is:
     -SortProperty "Name" or -SortProperty Name

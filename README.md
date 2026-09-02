@@ -49,7 +49,7 @@ Get-Size -SortProperty Name -Descending
 ```
 By default `Get-Size` sorts its results by size in ascending order, so `-Ascending` can be ommitted.  
 
-Leaving out filenames, variables or wildcards will default to showing the content of the current directory, the same way `Get-ChildItem` works, so the following are all equivalent:  
+Leaving out filenames, variables or wildcards will default to getting the size of the contents of the current directory, the same way `Get-ChildItem` works, so the following are all equivalent:  
 
 ```powershell
 Get-Size  
